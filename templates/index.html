@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="An interactive educational simulator for 1-to-2, 1-to-4, and 1-to-8 digital demultiplexers.">
+  <title>Interactive Demultiplexer Simulator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">D</span><span>Interactive Demultiplexer Simulator</span></a>
+    <nav aria-label="Main navigation"><a href="#home">Home</a><a href="#simulator">Simulator</a><a href="#about">About</a></nav>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">DIGITAL LOGIC · PBL TASK 2</p>
+        <h1>One input.<br><span>Many destinations.</span></h1>
+        <p>Explore how a demultiplexer routes a single digital signal to one selected output. Change the inputs and watch the circuit respond.</p>
+        <a class="button primary" href="#simulator">Open the simulator <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-visual" aria-label="A data input routed through a demultiplexer to multiple outputs">
+        <div class="hero-input"><span class="wire-label">DATA IN</span><span class="logic-dot high">1</span></div>
+        <div class="hero-wire"></div>
+        <div class="hero-block"><strong>DEMUX</strong><small>1 → N</small><span class="select-badge">SELECT</span></div>
+        <div class="hero-outputs"><i class="active-wire"></i><i></i><i></i><i></i><span>Y0</span><span>Y1</span><span>Y2</span><span>Y3</span></div>
+      </div>
+    </section>
+
+    <section class="simulator-section section-wrap" id="simulator">
+      <div class="section-heading"><div><p class="eyebrow">HANDS-ON LEARNING</p><h2>DEMUX Simulator</h2></div><p>Change any input to update the Python-powered circuit.</p></div>
+      <div class="sim-grid">
+        <section class="card controls-card" aria-labelledby="controls-title">
+          <div class="card-heading"><div><span class="step-number">01</span><h3 id="controls-title">Set the inputs</h3></div><button id="reset-button" class="button secondary" type="button">↺ Reset</button></div>
+          <label class="field-label" for="demux-type">Demultiplexer type</label>
+          <select id="demux-type"><option value="1-to-2">1-to-2 DEMUX</option><option value="1-to-4" selected>1-to-4 DEMUX</option><option value="1-to-8">1-to-8 DEMUX</option></select>
+          <div class="data-control"><div><span class="field-label">Data input <b>D</b></span><span class="field-hint">The signal to be routed</span></div><div class="segmented" role="group" aria-label="Data input"><button type="button" data-data="0" aria-pressed="false">0 <span>LOW</span></button><button type="button" data-data="1" aria-pressed="true">1 <span>HIGH</span></button></div></div>
+          <div class="select-control"><div><span class="field-label">Select lines</span><span class="field-hint">Choose the output address</span></div><div id="select-switches" class="switch-list"></div></div>
+          <p id="error-message" class="error-message" role="alert" hidden></p>
+          <p class="backend-note"><span class="status-dot"></span> Logic calculated by the Flask server</p>
+        </section>
+
+        <section class="card result-card" aria-labelledby="result-title" aria-live="polite">
+          <div class="card-heading"><div><span class="step-number">02</span><h3 id="result-title">Circuit output</h3></div><span id="type-badge" class="type-badge">1-to-4 DEMUX</span></div>
+          <div class="summary-row"><span id="input-summary">D = 1 <span class="logic-pill high">HIGH</span></span><span id="select-summary">Select: 10</span></div>
+          <div id="circuit" class="circuit" aria-label="Interactive circuit diagram"></div>
+          <div class="result-callout"><span class="callout-icon">↳</span><p id="explanation">D = 1, so the input is routed to Y2.</p></div>
+          <div class="output-list" id="output-list" aria-label="Output values"></div>
+        </section>
+      </div>
+    </section>
+
+    <section class="truth-section section-wrap">
+      <div class="section-heading"><div><p class="eyebrow">COMPLETE REFERENCE</p><h2>Truth table</h2></div><p id="truth-caption">All input combinations for the selected DEMUX.</p></div>
+      <div class="card table-card"><div class="table-scroll"><table id="truth-table"><caption class="sr-only">Demultiplexer truth table</caption><thead></thead><tbody></tbody></table></div></div>
+    </section>
+
+    <section class="learning-section section-wrap" id="about">
+      <div class="section-heading"><div><p class="eyebrow">LEARN THE CONCEPT</p><h2>From input to output</h2></div><p>A small building block with a big role in digital systems.</p></div>
+      <div class="learning-grid">
+        <article class="card learning-card"><span class="learn-icon blue-icon">01</span><h3>Introduction</h3><p>A demultiplexer (DEMUX) is a combinational circuit that takes one data input and directs it to one of several outputs.</p></article>
+        <article class="card learning-card"><span class="learn-icon">02</span><h3>Objective</h3><p>Understand how select lines choose the destination for a single digital input signal.</p></article>
+        <article class="card learning-card"><span class="learn-icon">03</span><h3>Problem statement</h3><p>Demonstrate DEMUX operation interactively and show how input and select-line changes affect each output.</p></article>
+        <article class="card learning-card"><span class="learn-icon">04</span><h3>Processing / logic</h3><p>Read the select lines as a binary index, set every output LOW, then route D to the indexed output.</p></article>
+        <article class="card learning-card"><span class="learn-icon">05</span><h3>Applications</h3><p>Data routing, communication systems, digital circuits, and control systems.</p></article>
+        <article class="card learning-card"><span class="learn-icon">06</span><h3>Advantages</h3><p>Simple routing, efficient signal distribution, and easy digital control using a small number of select lines.</p></article>
+      </div>
+      <div class="about-banner"><div><p class="eyebrow">ABOUT THE PROJECT</p><h3>College PBL Task 2</h3><p>This beginner-friendly learning project combines Python, Flask, HTML, CSS, and JavaScript to make digital logic easier to explore and explain.</p></div><span class="about-chip">COMPUTER ENGINEERING</span></div>
+    </section>
+  </main>
+  <footer><span>Interactive Demultiplexer Simulator</span><span>Built for learning digital logic</span></footer>
+</body>
+</html>
